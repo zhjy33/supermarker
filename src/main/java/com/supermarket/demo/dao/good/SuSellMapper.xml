@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.demo.dao.good.SuSellMapper">
+  <resultMap id="BaseResultMap" type="com.supermarket.demo.model.good.SuSell">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="qty" jdbcType="INTEGER" property="qty" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="sub_total" jdbcType="DECIMAL" property="subTotal" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <insert id="insert" parameterType="com.supermarket.demo.model.good.SuSell">
+    insert into su_sell (id, goods_id, qty, 
+      price, sub_total, date, 
+      remark, created_by, created_time, 
+      is_delete)
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{qty,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{subTotal,jdbcType=DECIMAL}, #{date}, 
+      #{remark,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.supermarket.demo.model.good.SuSell">
+    insert into su_sell
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="qty != null">
+        qty,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="subTotal != null">
+        sub_total,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="qty != null">
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="subTotal != null">
+        #{subTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="date != null">
+        #{date},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="query" resultType="com.supermarket.demo.model.good.SuSell">
+  	select 
+  	a.id,
+  	b.`name` goodsName,
+  	a.qty,
+  	a.price,
+  	a.sub_total subTotal,
+  	a.`date`,
+  	a.remark
+  	from su_sell a
+  	left join su_goods b on a.goods_id = b.id
+  	where a.is_delete = 0 order by a.created_time asc
+  </select>
+  
+  <update id="delete" parameterType="java.lang.Long">
+  	update su_sell set is_delete = 1 where id = #{id}
+  </update>
+  
+  <select id="queryByGoodsId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	select sum(qty) from su_sell where goods_id = #{id} and is_delete = 0
+  </select>
+</mapper>

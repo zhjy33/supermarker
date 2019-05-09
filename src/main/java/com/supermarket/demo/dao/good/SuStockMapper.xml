@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.demo.dao.good.SuStockMapper">
+  <resultMap id="BaseResultMap" type="com.supermarket.demo.model.good.SuStock">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="qty" jdbcType="INTEGER" property="qty" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <insert id="insert" parameterType="com.supermarket.demo.model.good.SuStock">
+    insert into su_stock (id, number, goods_id, 
+      qty, date, remark, created_date, 
+      created_by, is_delete)
+    values (#{id,jdbcType=BIGINT}, #{number,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, 
+      #{qty,jdbcType=INTEGER}, #{date,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=BIGINT}, #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.supermarket.demo.model.good.SuStock">
+    insert into su_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="qty != null">
+        qty,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="qty != null">
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="query" resultMap="BaseResultMap">
+  	select a.id,a.number, b.`name` goodsName,
+  	a.qty,
+  	a.`date`,
+  	a.remark
+  	from su_stock a
+  	left join su_goods b 
+  	on a.goods_id = b.id where a.is_delete = 0 order by a.created_date asc
+  </select>
+  
+  <update id="delete" parameterType="java.lang.Long">
+  	update su_stock set is_delete = 1 where id = #{id}
+  </update>
+  
+  <select id="queryByGoodsId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+  	select sum(qty) from su_stock where goods_id = #{id} and is_delete = 0
+  </select>
+</mapper>

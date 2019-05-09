@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.demo.dao.admin.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.supermarket.demo.model.admin.Admin">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="login_date" jdbcType="TIMESTAMP" property="loginDate" />
+    <result column="created_date" jdbcType="DATE" property="createdDate" />
+  </resultMap>
+  <insert id="insert" parameterType="com.supermarket.demo.model.admin.Admin">
+    insert into admin (id, name, password, 
+      login_date, created_date)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{loginDate,jdbcType=TIMESTAMP}, #{createdDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.supermarket.demo.model.admin.Admin">
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="loginDate != null">
+        login_date,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null">
+        #{loginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id = "checkAdmin" parameterType="com.supermarket.demo.model.admin.Admin" resultType = "com.supermarket.demo.model.admin.Admin">
+  	select * from admin where name = #{name} and password = #{password}
+  </select>
+  
+</mapper>

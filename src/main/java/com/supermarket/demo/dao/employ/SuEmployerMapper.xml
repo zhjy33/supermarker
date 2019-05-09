@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.demo.dao.employ.SuEmployerMapper">
+  <resultMap id="BaseResultMap" type="com.supermarket.demo.model.employ.SuEmployer">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="BIT" property="gender" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="educational_background" jdbcType="VARCHAR" property="educationalBackground" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <insert id="insert" parameterType="com.supermarket.demo.model.employ.SuEmployer">
+    insert into su_employer (id,name, gender, age, educational_background, 
+      position, create_by, create_date, 
+      is_delete)
+    values (#{id,jdbcType=BIGINT},#{name,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, #{age,jdbcType=INTEGER}, #{educationalBackground,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{createBy,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.supermarket.demo.model.employ.SuEmployer">
+    insert into su_employer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="educationalBackground != null">
+        educational_background,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=BIT},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="educationalBackground != null">
+        #{educationalBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="queryEmploy" resultMap="BaseResultMap">
+  	select * from su_employer where is_delete = 0 order by create_date asc
+  </select>
+  
+  <update id="delete" parameterType="java.lang.Long">
+  	update su_employer set is_delete = 1 where id = #{id}
+  </update>
+</mapper>

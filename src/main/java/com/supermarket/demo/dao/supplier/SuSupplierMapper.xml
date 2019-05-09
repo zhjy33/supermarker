@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.demo.dao.supplier.SuSupplierMapper">
+  <resultMap id="BaseResultMap" type="com.supermarket.demo.model.supplier.SuSupplier">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="tel" jdbcType="INTEGER" property="tel" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="post_code" jdbcType="VARCHAR" property="postCode" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company_name, address, contact_name, tel, fax, post_code, email, created_by, 
+    created_date, is_delete
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from su_supplier
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.supermarket.demo.model.supplier.SuSupplier">
+    insert into su_supplier (id, company_name, address, 
+      contact_name, tel, fax, 
+      post_code, email, created_by, 
+      created_date, is_delete)
+    values (#{id,jdbcType=BIGINT}, #{companyName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{contactName,jdbcType=VARCHAR}, #{tel,jdbcType=INTEGER}, #{fax,jdbcType=VARCHAR}, 
+      #{postCode,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, 
+      #{createdDate,jdbcType=DATE}, #{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.supermarket.demo.model.supplier.SuSupplier">
+    insert into su_supplier
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyName != null">
+        company_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="postCode != null">
+        post_code,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=INTEGER},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.supermarket.demo.model.supplier.SuSupplier">
+    update su_supplier
+    <set>
+      <if test="companyName != null">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=INTEGER},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.supermarket.demo.model.supplier.SuSupplier">
+    update su_supplier
+    set company_name = #{companyName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=INTEGER},
+      fax = #{fax,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=BIGINT},
+      created_date = #{createdDate,jdbcType=DATE},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="delete" parameterType="java.lang.Long">
+  	update su_supplier set is_delete = 1 where id = #{id}
+  </update>
+  
+  <select id="query" resultMap="BaseResultMap">
+  	select * from su_supplier where is_delete = 0 order by created_date asc
+  </select>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.demo.dao.salary.SuSalaryMapper">
+  <resultMap id="BaseResultMap" type="com.supermarket.demo.model.salary.SuSalary">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="employ_id" jdbcType="BIGINT" property="employId" />
+    <result column="name" jdbcType="BIGINT" property="employName" />
+    <result column="salary_date" jdbcType="TIMESTAMP" property="salaryDate" />
+    <result column="salary" jdbcType="DECIMAL" property="salary" />
+    <result column="achievement_salary" jdbcType="DECIMAL" property="achievementSalary" />
+    <result column="debit_fee" jdbcType="DECIMAL" property="debitFee" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <insert id="insert" parameterType="com.supermarket.demo.model.salary.SuSalary">
+    insert into su_salary (id, employ_id, salary_date, 
+      salary, achievement_salary, debit_fee, 
+      remark, create_by, is_delete, 
+      create_date)
+    values (#{id,jdbcType=BIGINT}, #{employId,jdbcType=BIGINT}, #{salaryDate,jdbcType=TIMESTAMP}, 
+      #{salary,jdbcType=DECIMAL}, #{achievementSalary,jdbcType=DECIMAL}, #{debitFee,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{createBy,jdbcType=BIGINT}, #{isDelete,jdbcType=BIT}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.supermarket.demo.model.salary.SuSalary">
+    insert into su_salary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employId != null">
+        employ_id,
+      </if>
+      <if test="salaryDate != null">
+        salary_date,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+      <if test="achievementSalary != null">
+        achievement_salary,
+      </if>
+      <if test="debitFee != null">
+        debit_fee,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="employId != null">
+        #{employId,jdbcType=BIGINT},
+      </if>
+      <if test="salaryDate != null">
+        #{salaryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=DECIMAL},
+      </if>
+      <if test="achievementSalary != null">
+        #{achievementSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="debitFee != null">
+        #{debitFee,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="query" resultMap="BaseResultMap">
+  	select a.*,b.`name` from su_salary a left join su_employer b on a.employ_id = b.id where a.is_delete = 0 order by a.create_date
+  </select>
+  
+  <update id="delete" parameterType="java.lang.Long">
+  	update su_salary set is_delete = 1 where id = #{id}
+  </update>
+</mapper>
